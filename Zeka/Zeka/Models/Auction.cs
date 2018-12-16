@@ -16,6 +16,7 @@ namespace Zeka.Models
         }
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid auction_id { get; set; }
 
         [Required]
@@ -31,11 +32,11 @@ namespace Zeka.Models
 
         public decimal current_price { get; set; }
 
-        public DateTime created { get; set; }
+        public DateTime? created { get; set; }
 
-        public DateTime opened { get; set; }
+        public DateTime? opened { get; set; }
 
-        public DateTime closed { get; set; }
+        public DateTime? closed { get; set; }
 
         [Required]
         [StringLength(10)]
@@ -44,6 +45,12 @@ namespace Zeka.Models
         public Guid user_id { get; set; }
 
         public decimal tokenValue { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string currency { get; set; }
+
+        public int token_price { get; set; }
 
         public virtual User User { get; set; }
 

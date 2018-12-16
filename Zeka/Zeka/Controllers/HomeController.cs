@@ -12,7 +12,8 @@ namespace Zeka.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            List<Auction> list = Auction.getAll();
+            return View(list);
         }
 
         public ActionResult About()

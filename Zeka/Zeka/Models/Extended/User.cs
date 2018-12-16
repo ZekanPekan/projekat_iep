@@ -57,16 +57,19 @@ namespace Zeka.Models
     {
         [Display(Name = "First name")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Fill in first name")]
+        [MaxLength(50, ErrorMessage = "50 characters is maximum")]
         public string firstName { get; set; }
 
 
         [Display(Name = "Last name")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Fill in last name")]
+        [MaxLength(50, ErrorMessage = "50 characters is maximum")]
         public string lastName { get; set; }
 
         [Display(Name = "Email")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Fill in email")]
         [DataType(DataType.EmailAddress)]
+        [MaxLength(50, ErrorMessage = "50 characters is maximum")]
         public string email { get; set; }
 
         [Display(Name = "Password")]

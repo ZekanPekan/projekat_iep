@@ -164,6 +164,7 @@
     <Compile Include="Models\Bid.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\Extended\Auction.cs" />
+    <Compile Include="Models\Extended\SystemConf.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Models\SystemConf.cs" />
@@ -214,10 +215,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Auction\CreateAuction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Auction\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

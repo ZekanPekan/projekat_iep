@@ -11,6 +11,25 @@ namespace Zeka.Utils
         {
             User
         }
+        private enum AuctionStatusKeys
+        {
+            READY, OPENED, COMPLETED
+        }
+
+        public static String AuctionReady()
+        {
+            return AuctionStatusKeys.READY.ToString();
+        }
+
+        public static String AuctionOpened()
+        {
+            return AuctionStatusKeys.OPENED.ToString();
+        }
+
+        public static String AuctionCompleted()
+        {
+            return AuctionStatusKeys.COMPLETED.ToString();
+        }
 
         public static String SessionUser()
         {

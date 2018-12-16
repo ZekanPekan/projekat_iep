@@ -10,6 +10,7 @@ namespace Zeka.Models
     public partial class SystemConf
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int system_conf_id { get; set; }
 
         public int silver_pack { get; set; }
