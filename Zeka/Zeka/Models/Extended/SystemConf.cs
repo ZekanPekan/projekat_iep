@@ -14,5 +14,15 @@ namespace Zeka.Models
                 return db.SystemConf.FirstOrDefault();
             }
         }
+
+        public void save()
+        {
+            using (Database db = new Database())
+            {
+                db.SystemConf.Add(this);
+                db.SaveChanges();
+            }
+        }
+
     }
 }

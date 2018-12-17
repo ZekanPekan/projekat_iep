@@ -27,7 +27,13 @@ namespace Zeka.Models
             auction.user_id = user_id;
             return auction;
         }
-
+        public void StartAuction()
+        {
+            if (this.state.Equals(KeysUtils.AuctionReady()))
+            {
+                //TODO
+            }
+        }
         public static List<Auction> getAll()
         {
             using (Database db = new Database())
