@@ -10,6 +10,7 @@ namespace Zeka.Models
     public partial class Bid
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid bid_id { get; set; }
 
         public Guid user_id { get; set; }

@@ -43,6 +43,30 @@ namespace Zeka.Models
                 return user;
             }
         }
+
+        public static Boolean Pay(int amount,Guid id)
+        {
+                User user = getById(id);
+                if (user == null)
+                    return false;
+
+                if (user.tokens < amount)
+                    return false;
+
+                user.tokens -= amount;
+                user.save();
+                return true;
+        }
+
+        public static User getById(Guid key)
+        {
+            using(Models.Database db = new Models.Database())
+            {
+                var user = db.User.Where(u => u.user_id == key).FirstOrDefault();
+                return user;
+            }
+        }
+
         public void save()
         {
             using (Database db = new Database())

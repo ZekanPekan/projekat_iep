@@ -27,13 +27,28 @@ namespace Zeka.Models
             auction.user_id = user_id;
             return auction;
         }
-        public void StartAuction()
+
+        public Boolean StartAuction()
         {
             if (this.state.Equals(KeysUtils.AuctionReady()))
             {
-                //TODO
+                this.state = KeysUtils.AuctionOpened();
+                this.current_price = this.starting_price;
+                this.opened = DateTime.Now;
+                this.closed = DateTime.Now.AddMilliseconds(this.duration * 1000);
+                return true;
+            }
+            return false;
+        }
+
+        public static Auction getByKey(Guid key)
+        {
+            using(Database db = new Database())
+            {
+                return db.Auction.Where(t => t.auction_id == key).FirstOrDefault();
             }
         }
+
         public static List<Auction> getAll()
         {
             using (Database db = new Database())
