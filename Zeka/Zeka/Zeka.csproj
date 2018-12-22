@@ -165,6 +165,7 @@
     <Compile Include="Models\Bid.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\Extended\Auction.cs" />
+    <Compile Include="Models\Extended\Bid.cs" />
     <Compile Include="Models\Extended\SystemConf.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\sysdiagrams.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\CryptUtils.cs" />
     <Compile Include="Utils\KeysUtils.cs" />
+    <Compile Include="Utils\SynchronizationUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
