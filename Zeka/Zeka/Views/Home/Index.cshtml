@@ -30,6 +30,20 @@
 
                                 </p>
                                 <p>Ends : @Model[j].closed</p>
+
+                                @if (Model[j].closed != null)
+                                {
+                                   <div class="auction-container" data-auction=@Model[j].duration></div>
+                                   <div>
+                                       Seconds left: <span class="counter">@Model[j].duration</span>
+                                   </div>
+                                }
+                                else
+                                {
+                                    <p>Ends in : ---</p>
+                                }
+
+
                                 <p id="price_selector_@Model[j].auction_id" class="card-text mt-auto"><b>@Model[j].current_price @Model[j].currency</b></p>
                                 @using (Html.BeginForm("InsertBid", "Bid", FormMethod.Post))
                                 {
@@ -37,7 +51,7 @@
                                     <input type="hidden" name="token_price" value="@Model[j].token_price" />
                                     if (Session["User"] != null && Model[j].state.Equals("OPENED"))
                                     {
-                                        <input type="submit" class="btn btn-primary mt-auto" value="Bid" />
+                                        <input type="submit" class="btn btn-primary mt-auto bid-action" value="Bid" />
 
                                     }
                                 }
@@ -84,5 +98,23 @@
 
         $.connection.hub.start().done(function () {
         });
+
+        $('.auction-container').each(function () {
+            var interval = $(this).attr('data-auction');
+
+            setInterval(() => {
+                interval -= 1;
+
+                if (interval > 0) {
+                    $(this).parent().find('.counter').text(interval);
+                } else if (interval == 0) {
+                    $(this).text('Auction ended.');
+                    $(this).parent().find('.bid-action').hide();
+                }
+            }, 1000);
+        });
+
+
     });
+
 </script>

@@ -105,3 +105,4 @@ C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\obj\Release\Zeka.csproj.C
 C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\obj\Release\Zeka.csproj.CopyComplete
 C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\obj\Release\Zeka.dll
 C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\obj\Release\Zeka.pdb
+C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\obj\Release\Zeka.csprojAssemblyReference.cache

@@ -88,7 +88,8 @@ namespace Zeka.Models
         {
             using (Database db = new Database())
             {
-                return db.Bid.Where(t => t.auction_id == auction_id).ToList();
+                return db.Bid.Where(t => t.auction_id == auction_id).Include(o=>o.User).ToList();
+
             }
         }
 

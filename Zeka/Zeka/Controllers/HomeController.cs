@@ -13,6 +13,13 @@ namespace Zeka.Controllers
         public ActionResult Index()
         {
             List<Auction> list = Auction.getAll();
+            foreach(Auction a in list)
+            {
+                if(a.closed != null)
+                {
+                    a.duration = (int)(a.closed.GetValueOrDefault() - DateTime.Now).TotalSeconds;
+                }
+            }
             return View(list);
         }
 
