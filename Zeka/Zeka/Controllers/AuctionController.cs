@@ -38,5 +38,20 @@ namespace Zeka.Controllers
 
             return View(fcAuction);
         }
+
+        [HttpPost]
+        public ActionResult ViewAuction(Guid key)
+        {
+
+            Auction auction = Auction.getByKey(key);
+            if(auction == null)
+                return RedirectToAction("Index", "Home");
+
+            AuctionWrapper aw = new AuctionWrapper();
+            aw.bids = Bid.getBidsForAuction(key);
+            aw.bids = aw.bids.OrderByDescending(o => o.tokens).ToList();
+            aw.auction = auction;
+            return View(aw);
+        }
     }
 }

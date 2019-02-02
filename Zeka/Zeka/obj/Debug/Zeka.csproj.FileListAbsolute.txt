@@ -187,3 +187,16 @@ C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\obj\Debug\Zeka.csproj.Cor
 C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\obj\Debug\Zeka.csproj.CopyComplete
 C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\obj\Debug\Zeka.dll
 C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\obj\Debug\Zeka.pdb
+C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\bin\Microsoft.Owin.dll
+C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\bin\Microsoft.Owin.Security.dll
+C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\bin\Owin.dll
+C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\bin\Microsoft.Owin.xml
+C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\bin\Microsoft.Owin.Security.xml
+C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\bin\Microsoft.AspNet.SignalR.Core.pdb
+C:\Users\PRESARHING\Desktop\git\projekat_iep\Zeka\Zeka\bin\Microsoft.AspNet.SignalR.SystemWeb.pdb

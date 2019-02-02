@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using Zeka.Utils;
@@ -54,7 +55,7 @@ namespace Zeka.Models
                     return false;
 
                 user.tokens -= amount;
-                user.save();
+                user.saveChanges();
                 return true;
         }
 
@@ -72,6 +73,15 @@ namespace Zeka.Models
             using (Database db = new Database())
             {
                 db.User.Add(this);
+                db.SaveChanges();
+            }
+        }
+
+        public void saveChanges()
+        {
+            using (Database db = new Database())
+            {
+                db.Entry(this).State = EntityState.Modified;
                 db.SaveChanges();
             }
         }
@@ -100,6 +110,31 @@ namespace Zeka.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Fill in password")]
         [DataType(DataType.Password)]
         [MinLength(7, ErrorMessage = "7 characters minimum")]
+        public string password { get; set; }
+    }
+
+    public class FormChangeUser
+    {
+        [Display(Name = "First name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Fill in first name")]
+        [MaxLength(50, ErrorMessage = "50 characters is maximum")]
+        public string firstName { get; set; }
+
+
+        [Display(Name = "Last name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Fill in last name")]
+        [MaxLength(50, ErrorMessage = "50 characters is maximum")]
+        public string lastName { get; set; }
+
+        [Display(Name = "Email")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Fill in email")]
+        [DataType(DataType.EmailAddress)]
+        [MaxLength(50, ErrorMessage = "50 characters is maximum")]
+        public string email { get; set; }
+
+        [Display(Name = "Password")]
+        [Required(AllowEmptyStrings = true, ErrorMessage = "Fill in password")]
+        [DataType(DataType.Password)]
         public string password { get; set; }
     }
 

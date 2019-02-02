@@ -9,7 +9,7 @@ namespace Zeka.Utils
     {
         private enum SessionKeys
         {
-            User
+            User,Admin
         }
         private enum AuctionStatusKeys
         {
@@ -34,6 +34,11 @@ namespace Zeka.Utils
         public static String SessionUser()
         {
             return SessionKeys.User.ToString();
+        }
+
+        public static String SessionAdmin()
+        {
+            return SessionKeys.Admin.ToString();
         }
     }
 }

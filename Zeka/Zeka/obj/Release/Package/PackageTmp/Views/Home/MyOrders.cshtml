@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Zeka.Models.TokenOrder>
+
+@{
+    ViewBag.Title = "MyOrders";
+}
+
+<h2>My Orders</h2>
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.tokens)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.state)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.first_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tokens)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)@Html.DisplayFor(modelItem => item.currency)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.state)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

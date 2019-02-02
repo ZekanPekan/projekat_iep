@@ -16,18 +16,96 @@ namespace Zeka.Controllers
             return View(list);
         }
 
-        public ActionResult About()
+        [HttpGet]
+        public ActionResult ChangeProfile()
         {
-            ViewBag.Message = "Your application description page.";
+            User u = (User)Session[KeysUtils.SessionUser()];
+            if(u == null)
+            {
+                return RedirectToAction("Register", "Home");
+            }
+            else
+            {
+                FormChangeUser fcu = new FormChangeUser();
+                fcu.lastName = u.last_name.Trim();
+                fcu.firstName = u.first_name.Trim();
+                fcu.email = u.email;
+                fcu.password = "";
 
-            return View();
+                return View(fcu);
+            }
         }
 
-        public ActionResult Contact()
+        public ActionResult SignOut()
         {
-            ViewBag.Message = "Your contact page.";
+            Session[KeysUtils.SessionUser()] = null;
+            return RedirectToAction("Index", "Home");
+        }
 
-            return View();
+        [HttpGet]
+        public ActionResult MyOrders()
+        {
+            User u = (User)Session[KeysUtils.SessionUser()];
+            if (u == null)
+                return RedirectToAction("Index", "Home");
+            else
+            {
+                List<TokenOrder> to = TokenOrder.getOrdersForUser(u.user_id);
+                return View(to);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult MyWinns()
+        {
+            User u = (User)Session[KeysUtils.SessionUser()];
+            if(u == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                List<Bid> ll = Bid.WonBids(u.user_id);
+                List<Auction> la = new List<Auction>();
+                foreach(Bid b in ll)
+                {
+                    la.Add(Auction.getByKey(b.auction_id));
+                }
+                return View(la);
+
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult ChangeProfile(FormChangeUser u)
+        {
+            User user = (User)Session[KeysUtils.SessionUser()];
+            if (!user.email.Trim().Equals(u.email) &&  Models.User.EmailExists(u.email))
+            {
+                ModelState.AddModelError("EmailExists", "Email already exists");
+            }
+            else
+            {
+                if (u.password == null || u.password.Trim().Equals(""))
+                    u.password = ((User)(Session[KeysUtils.SessionUser()])).password;
+                else
+                {
+                    user.password = CryptUtils.Hash(u.password);
+                }
+                user.email = u.email;
+                user.first_name = u.firstName;
+                user.last_name = u.lastName;
+                user.saveChanges();
+                Session[KeysUtils.SessionUser()] = user;
+                ViewBag.Status = true;
+                ViewBag.Message = "Changed profile  successfully";
+
+            }
+
+
+
+            return View(u);
         }
 
         [HttpGet]
@@ -81,8 +159,16 @@ namespace Zeka.Controllers
                 }
                 else
                 {
-                    Session[KeysUtils.SessionUser()] = user;
-                    return RedirectToAction("Index", "Home");
+                    if (user.admin_flag)
+                    {
+                        Session[KeysUtils.SessionAdmin()] = user;
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else
+                    {
+                        Session[KeysUtils.SessionUser()] = user;
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
             }
             return View(luser);

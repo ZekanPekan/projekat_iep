@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using Zeka.Utils;
@@ -53,16 +54,59 @@ namespace Zeka.Models
         {
             using (Database db = new Database())
             {
-              return db.Auction.ToList();
+                List<Auction> ll = db.Auction.ToList();
+                foreach(Auction a in ll)
+                {
+                    a.checkAuctionEnd();
+                }
+                return ll;
             }
         }
 
+        public void checkAuctionEnd()
+        {
+            if(DateTime.Now > this.closed)
+            {
+                Bid b = Zeka.Models.Bid.LastBidForAuction(this);
+                b.winner = true;
+                b.saveChanges();
+
+                this.state = KeysUtils.AuctionCompleted();
+                this.saveChanges();
+
+            }
+        }
+
+        public static List<Auction> getReadyAuctions()
+        {
+            using(Database db = new Database())
+            {
+                return db.Auction.Where(a => a.state == "READY").ToList();
+            }
+        }
+
+        public string getLastBidderEmail()
+        {
+            Bid b = Zeka.Models.Bid.LastBidForAuction(this);
+            if (b != null)
+                return User.getById(b.user_id).email;
+            return "No bids yet";
+        }
 
         public void save()
         {
             using (Database db = new Database())
             {
                 db.Auction.Add(this);
+                db.SaveChanges();
+            }
+        }
+
+        public void saveChanges()
+        {
+            using (Database db = new Database())
+            {
+                db.Entry(this).State = EntityState.Modified;
                 db.SaveChanges();
             }
         }
@@ -87,5 +131,11 @@ namespace Zeka.Models
         [Required(ErrorMessage = "Please select image")]
         public HttpPostedFileBase image { get; set; }
 
+    }
+
+    public class AuctionWrapper
+    {
+        public Auction auction { get; set; }
+        public List<Bid> bids { get; set; }
     }
 }

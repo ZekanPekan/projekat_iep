@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="Database-Web.config Connection String" description="Database Connection String used in web.config by the application to access the database." defaultValue="Data Source=iepzeka.database.windows.net;Initial Catalog=ZEKA_IEP;User ID=admin1234;Password=Root1234;Connect Timeout=60;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\PRESARHING\\Desktop\\git\\projekat_iep\\Zeka\\Zeka\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='Database']/@connectionString" />
+  </parameter>
+</parameters>
