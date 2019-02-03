@@ -24,15 +24,23 @@
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
 
-            @if (Session["User"] != null)
+            @if (Session["User"] != null || Session["Admin"] != null)
             {
                 <li>@Html.ActionLink("Change Profile", "ChangeProfile", "Home")</li>
                 <li>@Html.ActionLink("My Orders", "MyOrders", "Home")</li>
-                <li>@Html.ActionLink("Create auction", "CreateAuction","Auction")</li>
+                <li>@Html.ActionLink("Create auction", "CreateAuction", "Auction")</li>
+                <li>@Html.ActionLink("My Wins", "MyWinns", "Home")</li>
+                <li>@Html.ActionLink("My Tokens", "MyTokens", "Home")</li>
                 <li>@Html.ActionLink("Sign out", "SignOut", "Home")</li>
-                
+
             }
-            else
+            @if (Session["Admin"] != null)
+            {
+                <li>@Html.ActionLink("Ready auctions", "Index", "Admin")</li>
+                <li>@Html.ActionLink("Search Auctions", "Index", "Home")</li>
+                <li>@Html.ActionLink("Edit system configuration", "EditSystemConfig", "Admin")</li>
+            }
+            else if(Session["User"] == null)
             {
                 <li>@Html.ActionLink("Login", "Login", "Home")</li>
                 <li>@Html.ActionLink("Register", "Register", "Home")</li>

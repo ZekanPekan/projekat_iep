@@ -10,53 +10,83 @@ namespace Zeka.Controllers
 {
     public class AdminController : Controller
     {
-        // GET: Admin
+
         public ActionResult Index()
         {
-            List<Auction> list = Auction.getReadyAuctions();
-            return View(list);
+            User u = (User)Session[KeysUtils.SessionAdmin()];
+            if (u == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                List<Auction> list = Auction.getReadyAuctions();
+                return View(list);
+            }
         }
-        
+
         [HttpGet]
         public ActionResult EditSystemConfig()
         {
-            return View(SystemConf.GetSystemConf());
+            User u = (User)Session[KeysUtils.SessionAdmin()];
+            if (u == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View(SystemConf.GetSystemConf());
+            }
         }
 
         [HttpPost]
         public ActionResult EditSystemConfig(SystemConf conf)
         {
-            if (ModelState.IsValid)
+            User u = (User)Session[KeysUtils.SessionAdmin()];
+            if (u == null)
             {
-                conf.save();
-                ViewBag.Status = true;
-                ViewBag.Message = "Successfuly edited configuration";
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-                ViewBag.Message = "Invalid Request";
-                conf = SystemConf.GetSystemConf();
+                if (ModelState.IsValid)
+                {
+                    conf.save();
+                    ViewBag.Status = true;
+                    ViewBag.Message = "Successfuly edited configuration";
+                }
+                else
+                {
+                    ViewBag.Message = "Invalid Request";
+                    conf = SystemConf.GetSystemConf();
+                }
+                return View(conf);
             }
-            return View(conf);
         }
 
         [HttpPost]
         public ActionResult StartAuction(Guid key)
         {
-            Auction auction = Auction.getByKey(key);
-            if(auction != null)
+            User u = (User)Session[KeysUtils.SessionAdmin()];
+            if (u == null)
             {
-                auction.state = KeysUtils.AuctionOpened();
-                auction.current_price = auction.starting_price;
-                DateTime t = DateTime.Now;
-                t.AddSeconds(auction.duration);
-                auction.opened = DateTime.Now;
-                auction.closed = t;
-     
-                auction.saveChanges();
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Admin");
-        }
+            else
+            {
+                Auction auction = Auction.getByKey(key);
+                if (auction != null)
+                {
+                    auction.state = KeysUtils.AuctionOpened();
+                    auction.current_price = auction.starting_price;
+                    DateTime t = DateTime.Now;
+                    auction.opened = t;
+                    auction.closed = t.AddSeconds(auction.duration); 
 
+                    auction.saveChanges();
+                }
+                return RedirectToAction("Index", "Admin");
+            }
+        }
     }
 }

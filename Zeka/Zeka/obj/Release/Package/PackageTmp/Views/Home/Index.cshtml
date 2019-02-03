@@ -5,6 +5,34 @@
 }
 
 
+@using (Html.BeginForm("IndexSearched", "Home", FormMethod.Get))
+{
+<div>
+    <div>
+        <input class="form-control" type="text" placeholder="Word tokens" name="searchstring" title="Lookup Tokens" />
+    </div>
+    <div>
+        <input class="form-control" type="number" min="1" placeholder="Minimum tokens" name="minimum" />
+    </div>
+    <div>
+        <input class="form-control" type="number" min="1" placeholder="Maksimum tokens" name="maximum" />
+    </div>
+    <div>
+        <input class="form-control" type="number" min="1" placeholder="items per page" name="itemsperpage" />
+    </div>
+    <div>
+        <select class="form-control" name="state">
+            <option selected>Auction State</option>
+            <option>OPENED</option>
+            <option>COMPLETED</option>
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Search" class="btn btn-primary text-strong" />
+    </div>
+</div>
+    <hr />
+}
 
 <div class="container-fluid content-row">
     @{
@@ -31,16 +59,31 @@
                                 </p>
                                 <p>Ends : @Model[j].closed</p>
 
-                                @if (Model[j].closed != null)
+                                @if (Model[j].state.Equals("OPENED"))
                                 {
-                                   <div class="auction-container" data-auction=@Model[j].duration></div>
-                                   <div>
-                                       Seconds left: <span class="counter">@Model[j].duration</span>
-                                   </div>
+                                    if (Model[j].closed != null)
+                                    {
+
+                                        <div class="auction-container" data-auction=@Model[j].duration></div>
+                                        <div>
+                                            Seconds left: <span class="counter">@Model[j].duration</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <p>Ends in : ---</p>
+                                    }
                                 }
                                 else
                                 {
-                                    <p>Ends in : ---</p>
+                                    if (Model[j].state.Equals("COMPLETED"))
+                                    {
+                                        <span>Auciton completed</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Auction not opened yet</span>
+                                    }
                                 }
 
 
@@ -55,11 +98,9 @@
 
                                     }
                                 }
-                                @using (Html.BeginForm("ViewAuction", "Auction", FormMethod.Post))
-                                {
-                                    <input type="hidden" name="key" value="@Model[j].auction_id" />
-                                    <input type="submit" class="btn btn-primary mt-auto" value="See auction detail" />
-                                }
+                                <a href="@Url.Action("ViewAuction", "Auction", new { key = Model[j].auction_id, area = "" })">
+                                    View Auction Detail
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -101,17 +142,21 @@
 
         $('.auction-container').each(function () {
             var interval = $(this).attr('data-auction');
+            if (interval <= 0) {
 
-            setInterval(() => {
-                interval -= 1;
+            }
+            else {
+                setInterval(() => {
+                    interval -= 1;
 
-                if (interval > 0) {
-                    $(this).parent().find('.counter').text(interval);
-                } else if (interval == 0) {
-                    $(this).text('Auction ended.');
-                    $(this).parent().find('.bid-action').hide();
-                }
-            }, 1000);
+                    if (interval > 0) {
+                        $(this).parent().find('.counter').text(interval);
+                    } else if (interval == 0) {
+                        $(this).text('Auction ended.');
+                        $(this).parent().find('.bid-action').hide();
+                    }
+                }, 1000);
+            }
         });
 
 

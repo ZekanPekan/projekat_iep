@@ -120,7 +120,7 @@ namespace Zeka.Models
                     this.save();
                     User thisUser = User.getById(this.user_id);
                     AuctionHub.RefreshPrice(this.auction_id, thisUser.email, this.tokens, auction.currency, auction.current_price);
-                    AuctionHub.UpdateBidInsert(this.tokens, this.auction_id, thisUser.first_name, thisUser.last_name, this.time);
+                    AuctionHub.UpdateBidInsert(this.tokens, this.auction_id, thisUser.email, this.time,auction.current_price,auction.currency);
                     status = true;
                 }
             }

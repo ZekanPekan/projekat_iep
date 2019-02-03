@@ -13,7 +13,8 @@ namespace Zeka.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Home");
+            
         }
 
         [HttpGet]
@@ -25,10 +26,16 @@ namespace Zeka.Controllers
         [HttpPost]
         public ActionResult CreateAuction(FormCreateAuction fcAuction)
         {
-
+            User u = (User)Session[KeysUtils.SessionUser()];
+            if(u == null)
+            {
+                u = (User)Session[KeysUtils.SessionAdmin()];
+                if (u == null)
+                    return RedirectToAction("Index", "Home");
+            }
             if (ModelState.IsValid)
             {
-                Auction a = Auction.Create(fcAuction, ((User)Session[KeysUtils.SessionUser()]).user_id);
+                Auction a = Auction.Create(fcAuction, u.user_id);
                 a.save();
                 ViewBag.Status = true;
                 ViewBag.Message = "Successfuly creaed auction";
@@ -39,7 +46,7 @@ namespace Zeka.Controllers
             return View(fcAuction);
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult ViewAuction(Guid key)
         {
 
@@ -51,6 +58,10 @@ namespace Zeka.Controllers
             aw.bids = Bid.getBidsForAuction(key);
             aw.bids = aw.bids.OrderByDescending(o => o.tokens).ToList();
             aw.auction = auction;
+            if (aw.auction.closed != null)
+            {
+                aw.auction.duration = (int)(aw.auction.closed.GetValueOrDefault() - DateTime.Now).TotalSeconds;
+            }
             return View(aw);
         }
     }

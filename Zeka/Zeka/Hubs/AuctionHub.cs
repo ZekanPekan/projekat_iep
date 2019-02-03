@@ -9,10 +9,10 @@ namespace Zeka.Hubs
 {
     public class AuctionHub : Hub
     {
-        public static void UpdateBidInsert(int tokens, Guid auction_id,string first, string last, DateTime time)
+        public static void UpdateBidInsert(int tokens, Guid auction_id,string email, DateTime time,decimal price,string currency)
         {
             IHubContext hc = GlobalHost.ConnectionManager.GetHubContext<AuctionHub>();
-            hc.Clients.All.pageBidRefresh(tokens, first, last, time, auction_id);
+            hc.Clients.All.pageBidRefresh(tokens, email, time.ToString("MM/dd/yyyy HH:mm:ss tt"), auction_id.ToString(),price,currency);
         }
 
         public static void RefreshPrice(Guid auction_id, string email, int tokens, string currency, decimal price)

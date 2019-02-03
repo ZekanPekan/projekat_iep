@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Zeka.AplicationLogic;
 using Zeka.Models;
 using Zeka.Utils;
 
@@ -22,6 +23,20 @@ namespace Zeka.Controllers
             }
             return View(list);
         }
+
+        public ActionResult IndexSearched(int? minimum, int? maximum, int? itemsperpage, string state, string searchstring)
+        {
+            List<Auction> list = AuctionSearch.Search(minimum, maximum, itemsperpage, state, searchstring);
+            foreach (Auction a in list)
+            {
+                if (a.closed != null)
+                {
+                    a.duration = (int)(a.closed.GetValueOrDefault() - DateTime.Now).TotalSeconds;
+                }
+            }
+            return View(list);
+        }
+
 
         [HttpGet]
         public ActionResult ChangeProfile()
@@ -46,6 +61,7 @@ namespace Zeka.Controllers
         public ActionResult SignOut()
         {
             Session[KeysUtils.SessionUser()] = null;
+            Session[KeysUtils.SessionAdmin()] = null;
             return RedirectToAction("Index", "Home");
         }
 
@@ -83,6 +99,21 @@ namespace Zeka.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult MyTokens()
+        {
+            User u = (User)Session[KeysUtils.SessionUser()];
+            if(u == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                u = Models.User.getById(u.user_id);
+                ViewBag.tokens = u.tokens;
+                return View();
+            }
+        }
 
         [HttpPost]
         public ActionResult ChangeProfile(FormChangeUser u)

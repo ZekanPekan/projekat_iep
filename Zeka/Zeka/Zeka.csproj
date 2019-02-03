@@ -170,6 +170,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AplicationLogic\AuctionSearch.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -249,6 +250,8 @@
     <Content Include="Views\Home\MyOrders.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Home\MyWinns.cshtml" />
+    <Content Include="Views\Home\MyTokens.cshtml" />
+    <Content Include="Views\Home\IndexSearched.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

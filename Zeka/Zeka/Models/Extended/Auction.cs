@@ -52,28 +52,35 @@ namespace Zeka.Models
 
         public static List<Auction> getAll()
         {
+            List<Auction> ll = null;
             using (Database db = new Database())
             {
-                List<Auction> ll = db.Auction.ToList();
-                foreach(Auction a in ll)
-                {
-                    a.checkAuctionEnd();
-                }
-                return ll;
+                ll = db.Auction.ToList();
             }
+            foreach(Auction a in ll)
+            {
+               a.checkAuctionEnd();
+            }
+             return ll;
+            
         }
 
         public void checkAuctionEnd()
         {
-            if(DateTime.Now > this.closed)
+            if (this.state.Equals(KeysUtils.AuctionOpened()))
             {
-                Bid b = Zeka.Models.Bid.LastBidForAuction(this);
-                b.winner = true;
-                b.saveChanges();
+                if (DateTime.Now > this.closed)
+                {
+                    Bid b = Zeka.Models.Bid.LastBidForAuction(this);
+                    if (b != null)
+                    {
+                        b.winner = true;
+                        b.saveChanges();
+                    }
+                    this.state = KeysUtils.AuctionCompleted();
+                    this.saveChanges();
 
-                this.state = KeysUtils.AuctionCompleted();
-                this.saveChanges();
-
+                }
             }
         }
 
